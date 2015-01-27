@@ -30,8 +30,6 @@
                 double thisAmount = 0;
                 Rental each = rentals.Current;
 
-                thisAmount = AmountFor(each);
-
                 // Add frequent renter points
                 frequentRenterPoints++;
 
@@ -42,8 +40,8 @@
                 }
 
                 // Show figures for this rental
-                result += "\t" + each.Movie.Title + "\t" + thisAmount + "\n";
-                totalAmount += thisAmount;
+                result += "\t" + each.Movie.Title + "\t" + each.GetCharge() + "\n";
+                totalAmount += each.GetCharge();
             }
 
             // Add footer lines
@@ -51,11 +49,6 @@
             result += "You earned " + frequentRenterPoints + " frequent renter points";
 
             return result;
-        }
-
-        private double AmountFor(Rental aRental)
-        {
-            return aRental.GetCharge();
         }
     }
 }
