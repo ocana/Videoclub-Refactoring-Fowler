@@ -1,6 +1,7 @@
 ﻿namespace Refactoring
 {
     using System.Collections.Generic;
+    using System.Linq;
 
     public class Customer
     {
@@ -38,26 +39,12 @@
 
         private double GetTotalAmount()
         {
-            double result = 0;
-
-            foreach (var rental in _rentals)
-            {
-                result += rental.GetCharge();
-            }
-
-            return result;
+            return _rentals.Sum(rental => rental.GetCharge());
         }
 
         private int GetTotalFrequentRenterPoints()
         {
-            int result = 0;
-
-            foreach (var rental in _rentals)
-            {
-                result += rental.GetFrequentRenterPoints();
-            }
-
-            return result;
+            return _rentals.Sum(rental => rental.GetFrequentRenterPoints());
         }
     }
 }
