@@ -21,14 +21,12 @@
 
         public string Statement()
         {
-            IEnumerator<Rental> rentals = _rentals.GetEnumerator();
             string result = "Rental Record for " + Name + "\n";
-            while (rentals.MoveNext())
-            {
-                Rental each = rentals.Current;
 
+            foreach (var rental in _rentals)
+            {
                 // Show figures for this rental
-                result += "\t" + each.Movie.Title + "\t" + each.GetCharge() + "\n";
+                result += "\t" + rental.Movie.Title + "\t" + rental.GetCharge() + "\n";
             }
 
             // Add footer lines
@@ -42,11 +40,9 @@
         {
             double result = 0;
 
-            IEnumerator<Rental> rentals = _rentals.GetEnumerator();
-            while (rentals.MoveNext())
+            foreach (var rental in _rentals)
             {
-                Rental each = rentals.Current;
-                result += each.GetCharge();
+                result += rental.GetCharge();
             }
 
             return result;
@@ -54,18 +50,14 @@
 
         private int GetTotalFrequentRenterPoints()
         {
-            int frequentRenterPoints = 0;
-            IEnumerator<Rental> rentals = _rentals.GetEnumerator();
+            int result = 0;
 
-            while (rentals.MoveNext())
+            foreach (var rental in _rentals)
             {
-                Rental each = rentals.Current;
-
-                // Add frequent renter points
-                frequentRenterPoints += each.GetFrequentRenterPoints();
+                result += rental.GetFrequentRenterPoints();
             }
 
-            return frequentRenterPoints;
+            return result;
         }
     }
 }
