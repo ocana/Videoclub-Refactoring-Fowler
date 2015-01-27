@@ -30,27 +30,7 @@
                 double thisAmount = 0;
                 Rental each = rentals.Current;
 
-                // Determine amounts for each line
-                switch (each.Movie.PriceCode)
-                {
-                    case Movie.REGULAR:
-                        thisAmount += 2;
-                        if (each.DaysRented > 2)
-                        {
-                            thisAmount += (each.DaysRented - 2)*1.5;
-                        }
-                        break;
-                    case Movie.NEW_RELEASE:
-                        thisAmount += each.DaysRented * 3;
-                        break;
-                    case Movie.CHILDRENS:
-                        thisAmount += 1.5;
-                        if (each.DaysRented > 3)
-                        {
-                            thisAmount += (each.DaysRented - 3) * 1.5;
-                        }
-                        break;
-                }
+                thisAmount = AmountFor(each);
 
                 // Add frequent renter points
                 frequentRenterPoints++;
@@ -69,6 +49,34 @@
             // Add footer lines
             result += "Amount owed is " + totalAmount + "\n";
             result += "You earned " + frequentRenterPoints + " frequent renter points";
+
+            return result;
+        }
+
+        private double AmountFor(Rental aRental)
+        {
+            double result = 0;
+
+            switch (aRental.Movie.PriceCode)
+            {
+                case Movie.REGULAR:
+                    result += 2;
+                    if (aRental.DaysRented > 2)
+                    {
+                        result += (aRental.DaysRented - 2)*1.5;
+                    }
+                    break;
+                case Movie.NEW_RELEASE:
+                    result += aRental.DaysRented*3;
+                    break;
+                case Movie.CHILDRENS:
+                    result += 1.5;
+                    if (aRental.DaysRented > 3)
+                    {
+                        result += (aRental.DaysRented - 3)*1.5;
+                    }
+                    break;
+            }
 
             return result;
         }
