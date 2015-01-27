@@ -46,12 +46,7 @@
 
         public int GetFrequentRenterPoints(int daysRented)
         {
-            if (PriceCode == NEW_RELEASE && daysRented > 1)
-            {
-                return 2;
-            }
-
-            return 1;
+            return _price.GetFrequentRenterPoints(daysRented);
         }
     }
 }
