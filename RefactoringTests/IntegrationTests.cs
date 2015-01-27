@@ -125,12 +125,48 @@ namespace RefactoringTests
             myRental = new Rental(newRelease, daysRented);
             myCustomer.AddRental(myRental);
 
-            const string expectedStatement = "Rental Record for Miguel\n\tThe Regular Movie\t14\n\tThe Childrens Movie\t12\n\tThe New Release Movie\t30\nAmount owed is 56\nYou earned 4 frequent renter points";
+            const string expectedStatement = "Rental Record for Miguel\n" +
+                                             "\tThe Regular Movie\t14\n\tThe Childrens Movie\t12\n\tThe New Release Movie\t30\n" +
+                                             "Amount owed is 56\nYou earned 4 frequent renter points";
 
             string actualStatement;
 
             // Act
             actualStatement = myCustomer.Statement();
+
+            // Assert
+            Assert.AreEqual(expectedStatement, actualStatement);
+        }
+
+        [TestMethod]
+        public void When3RentalsEachMovieTenDaysRentedInHtml()
+        {
+            // Arrange
+            const int daysRented = 10;
+
+            Movie regular = new Movie("The Regular Movie", Movie.REGULAR);
+            Movie childrens = new Movie("The Childrens Movie", Movie.CHILDRENS);
+            Movie newRelease = new Movie("The New Release Movie", Movie.NEW_RELEASE);
+
+            Customer myCustomer = new Customer("Miguel");
+
+            Rental myRental = new Rental(regular, daysRented);
+            myCustomer.AddRental(myRental);
+
+            myRental = new Rental(childrens, daysRented);
+            myCustomer.AddRental(myRental);
+
+            myRental = new Rental(newRelease, daysRented);
+            myCustomer.AddRental(myRental);
+
+            const string expectedStatement = "<H1>Rentals for <EM>Miguel</EM></H1><P>\nThe Regular Movie: 14<BR>\nThe Childrens Movie: 12<BR>" +
+                                             "\nThe New Release Movie: 30<BR>\n<P>You owe <EM>56</EM><P>\n" +
+                                             "On this rental you earned <EM>4</EM> frequent renter points<P>";
+
+            string actualStatement;
+
+            // Act
+            actualStatement = myCustomer.HtmlStatement();
 
             // Assert
             Assert.AreEqual(expectedStatement, actualStatement);

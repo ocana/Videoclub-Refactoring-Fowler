@@ -39,6 +39,24 @@
             return result.ToString();
         }
 
+        public string HtmlStatement()
+        {
+            StringBuilder result = new StringBuilder();
+            result.AppendFormat("<H1>Rentals for <EM>{0}</EM></H1><P>\n", Name);
+
+            foreach (var rental in _rentals)
+            {
+                // Show figures for this rental
+                result.AppendFormat("{0}: {1}<BR>\n", rental.Movie.Title, rental.GetCharge());
+            }
+
+            // Add footer lines
+            result.AppendFormat("<P>You owe <EM>{0}</EM><P>\n", GetTotalAmount());
+            result.AppendFormat("On this rental you earned <EM>{0}</EM> frequent renter points<P>", GetTotalFrequentRenterPoints());
+
+            return result.ToString();
+        }
+
         private double GetTotalAmount()
         {
             return _rentals.Sum(rental => rental.GetCharge());

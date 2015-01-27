@@ -37,5 +37,21 @@ namespace RefactoringTests
             // Assert
             Assert.AreEqual(expectedStatement, actualStatement);
         }
+
+        [TestMethod]
+        public void WhenHtmlStatementWithEmptyRentals_ItShouldReturnTheZeroHtmlStatement()
+        {
+            // Arrange
+            const string expectedStatement = "<H1>Rentals for <EM></EM></H1><P>\n<P>You owe <EM>0</EM><P>\n" +
+                                             "On this rental you earned <EM>0</EM> frequent renter points<P>";
+            string actualStatement;
+            Customer myCustomer = new Customer(string.Empty);
+
+            // Act
+            actualStatement = myCustomer.HtmlStatement();
+
+            // Assert
+            Assert.AreEqual(expectedStatement, actualStatement);
+        }
     }
 }
