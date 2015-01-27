@@ -21,13 +21,11 @@
 
         public string Statement()
         {
-            double totalAmount = 0;
             int frequentRenterPoints = 0;
             IEnumerator<Rental> rentals = _rentals.GetEnumerator();
             string result = "Rental Record for " + Name + "\n";
             while (rentals.MoveNext())
             {
-                double thisAmount = 0;
                 Rental each = rentals.Current;
 
                 // Add frequent renter points
@@ -35,12 +33,25 @@
 
                 // Show figures for this rental
                 result += "\t" + each.Movie.Title + "\t" + each.GetCharge() + "\n";
-                totalAmount += each.GetCharge();
             }
 
             // Add footer lines
-            result += "Amount owed is " + totalAmount + "\n";
+            result += "Amount owed is " + GetTotalAmount() + "\n";
             result += "You earned " + frequentRenterPoints + " frequent renter points";
+
+            return result;
+        }
+
+        private double GetTotalAmount()
+        {
+            double result = 0;
+
+            IEnumerator<Rental> rentals = _rentals.GetEnumerator();
+            while (rentals.MoveNext())
+            {
+                Rental each = rentals.Current;
+                result += each.GetCharge();
+            }
 
             return result;
         }
