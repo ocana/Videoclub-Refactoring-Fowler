@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
 
     public class Customer
     {
@@ -22,19 +23,20 @@
 
         public string Statement()
         {
-            string result = "Rental Record for " + Name + "\n";
-
+            StringBuilder result = new StringBuilder();
+            result.AppendFormat("Rental Record for {0}\n", Name);
+            
             foreach (var rental in _rentals)
             {
                 // Show figures for this rental
-                result += "\t" + rental.Movie.Title + "\t" + rental.GetCharge() + "\n";
+                result.AppendFormat("\t{0}\t{1}\n", rental.Movie.Title, rental.GetCharge());
             }
 
             // Add footer lines
-            result += "Amount owed is " + GetTotalAmount() + "\n";
-            result += "You earned " + GetTotalFrequentRenterPoints() + " frequent renter points";
+            result.AppendFormat("Amount owed is {0}\n", GetTotalAmount());
+            result.AppendFormat("You earned {0} frequent renter points", GetTotalFrequentRenterPoints());
 
-            return result;
+            return result.ToString();
         }
 
         private double GetTotalAmount()
