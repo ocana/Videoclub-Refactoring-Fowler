@@ -31,13 +31,7 @@
                 Rental each = rentals.Current;
 
                 // Add frequent renter points
-                frequentRenterPoints++;
-
-                // Add bonus for a two day new release rental
-                if (each.Movie.PriceCode == Movie.NEW_RELEASE && each.DaysRented > 1)
-                {
-                    frequentRenterPoints++;
-                }
+                frequentRenterPoints += each.GetFrequentRenterPoints();
 
                 // Show figures for this rental
                 result += "\t" + each.Movie.Title + "\t" + each.GetCharge() + "\n";

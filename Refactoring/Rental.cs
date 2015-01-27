@@ -39,5 +39,15 @@
 
             return result;
         }
+
+        public int GetFrequentRenterPoints()
+        {
+            if (Movie.PriceCode == Movie.NEW_RELEASE && DaysRented > 1)
+            {
+                return 2;
+            }
+
+            return 1;
+        }
     }
 }
