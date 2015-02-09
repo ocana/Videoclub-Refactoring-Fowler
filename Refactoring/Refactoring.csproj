@@ -45,7 +45,7 @@
   <ItemGroup>
     <Compile Include="ChildrensPrice.cs" />
     <Compile Include="Customer.cs" />
-    <Compile Include="HtmlStatment.cs" />
+    <Compile Include="HtmlStatement.cs" />
     <Compile Include="Movie.cs" />
     <Compile Include="NewReleasePrice.cs" />
     <Compile Include="Price.cs" />
