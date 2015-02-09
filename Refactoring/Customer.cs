@@ -6,19 +6,19 @@
 
     public class Customer
     {
-        private IList<Rental> _rentals;
+        public IList<Rental> Rentals { get; private set; }
 
         public Customer(string name)
         {
             Name = name;
-            _rentals = new List<Rental>();
+            Rentals = new List<Rental>();
         }
 
         public string Name { get; private set; }
 
         public void AddRental(Rental arg)
         {
-            _rentals.Add(arg);
+            Rentals.Add(arg);
         }
 
         public string Statement()
@@ -26,7 +26,7 @@
             StringBuilder result = new StringBuilder();
             result.AppendFormat("Rental Record for {0}\n", Name);
             
-            foreach (var rental in _rentals)
+            foreach (var rental in Rentals)
             {
                 // Show figures for this rental
                 result.AppendFormat("\t{0}\t{1}\n", rental.Movie.Title, rental.GetCharge());
@@ -44,7 +44,7 @@
             StringBuilder result = new StringBuilder();
             result.AppendFormat("<H1>Rentals for <EM>{0}</EM></H1><P>\n", Name);
 
-            foreach (var rental in _rentals)
+            foreach (var rental in Rentals)
             {
                 // Show figures for this rental
                 result.AppendFormat("{0}: {1}<BR>\n", rental.Movie.Title, rental.GetCharge());
@@ -57,14 +57,14 @@
             return result.ToString();
         }
 
-        private double GetTotalAmount()
+        public double GetTotalAmount()
         {
-            return _rentals.Sum(rental => rental.GetCharge());
+            return Rentals.Sum(rental => rental.GetCharge());
         }
 
-        private int GetTotalFrequentRenterPoints()
+        public int GetTotalFrequentRenterPoints()
         {
-            return _rentals.Sum(rental => rental.GetFrequentRenterPoints());
+            return Rentals.Sum(rental => rental.GetFrequentRenterPoints());
         }
     }
 }
