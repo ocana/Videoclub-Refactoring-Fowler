@@ -7,19 +7,33 @@
         public override string Value(Customer customer)
         {
             StringBuilder result = new StringBuilder();
-            result.AppendFormat("Rental Record for {0}\n", customer.Name);
+            result.Append(HeaderString(customer));
 
             foreach (var rental in customer.Rentals)
             {
-                // Show figures for this rental
-                result.AppendFormat("\t{0}\t{1}\n", rental.Movie.Title, rental.GetCharge());
+                result.Append(EachRentalString(rental));
             }
 
-            // Add footer lines
-            result.AppendFormat("Amount owed is {0}\n", customer.GetTotalAmount());
-            result.AppendFormat("You earned {0} frequent renter points", customer.GetTotalFrequentRenterPoints());
+            result.Append(FooterString(customer));
 
             return result.ToString();
+        }
+
+        private string HeaderString(Customer customer)
+        {
+            return string.Format("Rental Record for {0}\n", customer.Name);
+        }
+
+        private string EachRentalString(Rental rental)
+        {
+            return string.Format("\t{0}\t{1}\n", rental.Movie.Title, rental.GetCharge());
+        }
+
+        private string FooterString(Customer customer)
+        {
+            var footerString = string.Format("Amount owed is {0}\n", customer.GetTotalAmount());
+            footerString += string.Format("You earned {0} frequent renter points", customer.GetTotalFrequentRenterPoints());
+            return footerString;
         }
     }
 }
